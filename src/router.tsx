@@ -1,11 +1,11 @@
 import { createHashRouter } from 'react-router-dom';
 import * as Pages from './pages';
-import { Header } from './header';
+import App from './App.tsx';
 
 export const PagesRouter = createHashRouter([
   {
     path: '/',
-    element: <Header />,
+    element: <App />,
     children: [
       {
         path: '/',
