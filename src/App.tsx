@@ -1,32 +1,41 @@
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Layout, theme } from 'antd';
+import {
+  Box,
+  IconButton,
+  Toolbar,
+  Container,
+} from '@mui/material';
 import * as Components from './components';
-
-const { Content, Sider } = Layout;
+import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function App() {
-  const {
-    token: { colorBgContainer, borderRadiusLG }
-  } = theme.useToken();
+  const [ isDrawerClose, setIsDrawerClose ] = useState(true);
 
-  return <Layout style={{ minHeight: '100vh' }}>
-    <Sider collapsible>
-      <Components.Menu />
-    </Sider>
-    <Layout>
-      <Content
-        style={{
-          margin: 24,
-          marginBottom: 0,
-          background: colorBgContainer,
-          borderRadius: borderRadiusLG,
-        }}
+  return <Box>
+    <Components.AppBar
+      title='LiteLoader WebUI'
+      leftElements={[<IconButton
+        edge='start'
+        color='inherit'
+        onClick={() => setIsDrawerClose(false)}
+        sx={{ marginRight: '36px' }}
       >
-        <Outlet/>
-      </Content>
-      <Components.Footer />
-    </Layout>
-  </Layout>
+        <MenuIcon />
+      </IconButton>]}
+      rightElements={[<IconButton color='inherit'>
+        <LogoutIcon />
+      </IconButton>]}
+    />
+    <Box component='main' sx={{ overflow: 'auto' }}>
+      <Toolbar />
+      <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
+        <Outlet />
+      </Container>
+    </Box>
+    <Components.Drawer open={!isDrawerClose} onClose={() => setIsDrawerClose(true)} />
+  </Box>
 }
 
 export default App
