@@ -1,12 +1,4 @@
-import {
-  Box,
-  Avatar,
-  Typography,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Button,
-} from '@mui/material';
+import {Avatar, Box, Button, Checkbox, FormControlLabel, TextField, Typography,} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const UrlReg = /^https?:\/\/.+/;
@@ -14,15 +6,6 @@ const UrlReg = /^https?:\/\/.+/;
 export const Login = () => {
   const params = Object.fromEntries((new URLSearchParams(window.location.search)).entries());
   const paramUrl = params.url && UrlReg.test(params.url) ? params.url : '';
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    const form = new FormData(e.target);
-    const data = Object.fromEntries(form.entries());
-
-    console.log(data);
-  };
 
   return (
   <Box
@@ -37,7 +20,14 @@ export const Login = () => {
       <LockOutlinedIcon />
     </Avatar>
     <Typography component='h1' variant='h5'>登陆 WebUI</Typography>
-    <Box component='form' onSubmit={handleLogin} sx={{ mt: 1 }}>
+    <Box component='form' onSubmit={(e) => {
+      e.preventDefault();
+
+      const form = new FormData(e.currentTarget);
+      const data = Object.fromEntries(form.entries());
+
+      console.log(data);
+    }} sx={{ mt: 1 }}>
       <TextField
         margin='normal'
         fullWidth
